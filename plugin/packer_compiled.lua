@@ -74,6 +74,11 @@ end
 time([[try_loadstring definition]], false)
 time([[Defining packer_plugins]], true)
 _G.packer_plugins = {
+  catppuccin = {
+    loaded = true,
+    path = "C:\\Users\\joao\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\catppuccin",
+    url = "https://github.com/catppuccin/nvim"
+  },
   ["lualine.nvim"] = {
     loaded = true,
     path = "C:\\Users\\joao\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\lualine.nvim",
