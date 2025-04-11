@@ -25,4 +25,13 @@ require("lazy").setup({
   "L3MON4D3/LuaSnip",
 
   "nvimtools/none-ls.nvim", -- null-ls (rebatizado)
+
+  {
+    "nvim-tree/nvim-tree.lua",
+    dependencies = { "nvim-tree/nvim-web-devicons" }, -- ícones bonitinhos
+    config = function()
+      require("nvim-tree").setup({})
+      vim.keymap.set("n", "<leader>e", ":NvimTreeToggle<CR>", { desc = "Alternar Explorer" })
+    end,
+  }
 })
