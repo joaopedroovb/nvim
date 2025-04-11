@@ -1,7 +1,59 @@
 return {
   -- Aparência
   "nvim-tree/nvim-web-devicons",
-  "catppuccin/nvim", -- ou troque por "folke/tokyonight.nvim" se preferir
+  {
+  "catppuccin/nvim",
+  name = "catppuccin",
+  priority = 1000, -- garante que o tema será carregado antes dos outros plugins
+  config = function()
+    require("catppuccin").setup({
+      flavour = "frappe", -- latte, frappe, macchiato, mocha
+      background = {
+        light = "latte",
+        dark = "mocha",
+      },
+      transparent_background = false,
+      show_end_of_buffer = false,
+      term_colors = false,
+      dim_inactive = {
+        enabled = false,
+        shade = "dark",
+        percentage = 0.15,
+      },
+      no_italic = false,
+      no_bold = false,
+      no_underline = false,
+      styles = {
+        comments = { "italic" },
+        conditionals = { "italic" },
+        loops = {},
+        functions = {},
+        keywords = {},
+        strings = {},
+        variables = {},
+        numbers = {},
+        booleans = {},
+        properties = {},
+        types = {},
+        operators = {},
+      },
+      integrations = {
+        cmp = true,
+        gitsigns = true,
+        nvimtree = true,
+        treesitter = true,
+        notify = false,
+        mini = {
+          enabled = true,
+          indentscope_color = "",
+        },
+      },
+    })
+
+    -- aplica o tema
+    vim.cmd.colorscheme("catppuccin")
+  end,
+},
   {
     "nvim-lualine/lualine.nvim",
     config = function()
