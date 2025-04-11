@@ -69,5 +69,8 @@ map("n", "<S-A-F>", function() vim.lsp.buf.format() end, { desc = "Formatar docu
 -- 📜 Quebra de linha
 map("n", "<A-z>", ":set wrap!<CR>", { desc = "Alternar quebra de linha" })
 
--- Adiciona comando Ctrl+S para salvar
+-- 🧾 Ctrl + S / Ctrl + Z / Ctrl + Y estilo VS Code
 vim.keymap.set("n", "<C-s>", ":w<CR>", { desc = "Salvar arquivo" })
+vim.keymap.set("n", "<C-z>", "u", { desc = "Desfazer alteração" })
+vim.keymap.set("n", "<C-y>", "<C-r>", { desc = "Refazer alteração" })
+
