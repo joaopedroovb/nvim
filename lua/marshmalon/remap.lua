@@ -56,7 +56,6 @@ local non_lsp_mappings = {
     p = { "\"_dP", "Paste without overwrite" },
     ["/"] = { "<Plug>(comment_toggle_linewise_current)", "Toggle comment" },
     s = { [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], "Search and replace word under cursor" },
-    t = { ":Today<CR>", "Open today's note" },
   },
   J = { "mzJ`z", "Join lines and keep cursor position" },
   ["<C-d>"] = { "<C-d>zz", "Half page down and center" },
@@ -77,7 +76,6 @@ which_key.register(non_lsp_mappings)
 -- vim.keymap.set("n", "Q", "<nop>")       --- Just undo capital Q support
 -- vim.keymap.set("n", "<leader>/", "<Plug>(comment_toggle_linewise_current)")
 -- vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
--- vim.keymap.set("n", "<leader>t", ":Today<CR>")
 
 -- Telescope Commands
 
