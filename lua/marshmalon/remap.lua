@@ -1,6 +1,7 @@
 local which_key = require "which-key"
 local builtin = require('telescope.builtin')
 
+-- Autocomando para configurar os atalhos LSP quando o LSP for anexado ao buffer
 vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('user_lsp_attach', { clear = true }),
   callback = function(event)
@@ -8,124 +9,111 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
     local mappings = {
       g = {
-        d = { vim.lsp.buf.definition, "Go to definition" },
-        l = { vim.diagnostic.open_float, "Open diagnostic float" },
+        d = { vim.lsp.buf.definition, "Ir para definição" },
+        l = { vim.diagnostic.open_float, "Abrir diagnóstico flutuante" },
       },
-      K = { vim.lsp.buf.hover, "Show hover information" },
+      K = { vim.lsp.buf.hover, "Mostrar informações" },
       ["<leader>"] = {
         l = {
           name = "LSP",
-          a = { vim.lsp.buf.code_action, "Code action" },
-          r = { vim.lsp.buf.references, "References" },
-          n = { vim.lsp.buf.rename, "Rename" },
-          w = { vim.lsp.buf.workspace_symbol, "Workspace symbol" },
-          d = { vim.diagnostic.open_float, "Open diagnostic float" },
+          a = { vim.lsp.buf.code_action, "Ação de código" },
+          r = { vim.lsp.buf.references, "Referências" },
+          n = { vim.lsp.buf.rename, "Renomear" },
+          w = { vim.lsp.buf.workspace_symbol, "Símbolos do workspace" },
+          d = { vim.diagnostic.open_float, "Abrir diagnóstico flutuante" },
         },
       },
-      ["[d"] = { vim.diagnostic.goto_next, "Go to next diagnostic" },
-      ["]d"] = { vim.diagnostic.goto_prev, "Go to previous diagnostic" },
+      ["[d"] = { vim.diagnostic.goto_next, "Próximo diagnóstico" },
+      ["]d"] = { vim.diagnostic.goto_prev, "Diagnóstico anterior" },
     }
 
     which_key.register(mappings, opts)
 
-    -- vim.keymap.set('n', 'gd', function() vim.lsp.buf.definition() end, opts)
-    -- vim.keymap.set('n', 'K', function() vim.lsp.buf.hover() end, opts)
-    -- vim.keymap.set('n', '<leader>vws', function() vim.lsp.buf.workspace_symbol() end, opts)
-    -- vim.keymap.set('n', '<leader>vd', function() vim.diagnostic.open_float() end, opts)
-    -- vim.keymap.set('n', '[d', function() vim.diagnostic.goto_next() end, opts)
-    -- vim.keymap.set('n', ']d', function() vim.diagnostic.goto_prev() end, opts)
-    -- vim.keymap.set('n', '<leader>lca', function() vim.lsp.buf.code_action() end, opts)
-    -- vim.keymap.set('n', '<leader>lrr', function() vim.lsp.buf.references() end, opts)
-    -- vim.keymap.set('n', '<leader>lrn', function() vim.lsp.buf.rename() end, opts)
-    -- vim.keymap.set('i', '<C-h>', function() vim.lsp.buf.signature_help() end, opts)
-
-    -- https://www.mitchellhanberg.com/modern-format-on-save-in-neovim/
+    -- Formatar automaticamente antes de salvar
     vim.api.nvim_create_autocmd("BufWritePre", {
       buffer = event.buf,
       callback = function()
         vim.lsp.buf.format { async = false, id = event.data.client_id }
       end
-
     })
   end,
 })
 
+-- Mapeamentos gerais (fora do LSP)
 local non_lsp_mappings = {
   ["<leader>"] = {
-    e = { vim.cmd.Ex, "Open file explorer" },
-    p = { "\"_dP", "Paste without overwrite" },
-    ["/"] = { "<Plug>(comment_toggle_linewise_current)", "Toggle comment" },
-    s = { [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], "Search and replace word under cursor" },
+    e = { vim.cmd.Ex, "Abrir explorador de arquivos" },
+    p = { "\"_dP", "Colar sem sobrescrever" },
+    ["/"] = { "<Plug>(comment_toggle_linewise_current)", "Comentar/descomentar linha" },
+    s = { [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], "Buscar e substituir palavra" },
   },
-  J = { "mzJ`z", "Join lines and keep cursor position" },
-  ["<C-d>"] = { "<C-d>zz", "Half page down and center" },
-  ["<C-u>"] = { "<C-u>zz", "Half page up and center" },
-  n = { "nzzzv", "Next search result and center" },
-  N = { "Nzzzv", "Previous search result and center" },
-  Q = { "<nop>", "Disable Ex mode" },
+  J = { "mzJ`z", "Unir linhas mantendo o cursor" },
+  ["<C-d>"] = { "<C-d>zz", "Descer meia página centralizando" },
+  ["<C-u>"] = { "<C-u>zz", "Subir meia página centralizando" },
+  n = { "nzzzv", "Próximo resultado e centralizar" },
+  N = { "Nzzzv", "Resultado anterior e centralizar" },
+  Q = { "<nop>", "Desativar modo Ex" },
 }
 
 which_key.register(non_lsp_mappings)
 
--- vim.keymap.set("n", "<leader>e", vim.cmd.Ex)
--- vim.keymap.set("n", "J", "mzJ`z")       -- Keep cursor in same position on line join
--- vim.keymap.set("n", "<C-d>", "<C-d>zz") -- Keep cursor in middle on half page jump down
--- vim.keymap.set("n", "<C-u>", "<C-u>zz") -- Keep cursor in middle on half page jump down
--- vim.keymap.set("n", "n", "nzzzv")       -- Keep searched term in middle
--- vim.keymap.set("n", "N", "Nzzzv")       -- Keep reverse searched term in middle
--- vim.keymap.set("n", "Q", "<nop>")       --- Just undo capital Q support
--- vim.keymap.set("n", "<leader>/", "<Plug>(comment_toggle_linewise_current)")
--- vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
-
--- Telescope Commands
-
+-- Comandos do Telescope
 local telescope_mappings = {
   f = {
-    name = "Find",
-    f = { builtin.find_files, "Find files" },
-    g = { builtin.git_files, "Find git files" },
-    l = { builtin.live_grep, "Live grep" },
+    name = "Buscar",
+    f = { builtin.find_files, "Buscar arquivos" },
+    g = { builtin.git_files, "Buscar arquivos Git" },
+    l = { builtin.live_grep, "Grep ao vivo" },
   },
 }
 
 which_key.register(telescope_mappings, { prefix = "<leader>" })
 
--- Register the semicolon mapping separately as it doesn't use the leader prefix
+-- Atalho separado para listar buffers abertos
 which_key.register({
-  [";"] = { builtin.buffers, "Find buffers" },
+  [";"] = { builtin.buffers, "Listar buffers" },
 })
 
--- vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
--- vim.keymap.set('n', '<leader>fg', builtin.git_files, {})
--- vim.keymap.set('n', '<leader>fl', builtin.live_grep, {})
--- vim.keymap.set('n', ';', builtin.buffers, {})
-
-
-
--- Use move command while highlighted to move text
--- vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
--- vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
-
--- vim.keymap.set("v", "<leader>/", "<Plug>(comment_toggle_linewise_visual)")
-
+-- Mapeamentos para modo visual
 local visual_mappings = {
-  J = { ":m '>+1<CR>gv=gv", "Move selection down" },
-  K = { ":m '<-2<CR>gv=gv", "Move selection up" },
+  J = { ":m '>+1<CR>gv=gv", "Mover seleção para baixo" },
+  K = { ":m '<-2<CR>gv=gv", "Mover seleção para cima" },
   ["<leader>"] = {
-    ["/"] = { "<Plug>(comment_toggle_linewise_visual)", "Toggle comment" },
+    ["/"] = { "<Plug>(comment_toggle_linewise_visual)", "Comentar/descomentar visual" },
   },
 }
 
 which_key.register(visual_mappings, { mode = "v" })
 
---- Don't overwrite pastes in visual mode
--- vim.keymap.set("x", "<leader>p", "\"_dP")
+-- Impedir que colar no modo visual sobrescreva o conteúdo copiado
+vim.keymap.set("x", "<leader>p", "\"_dP")
 
+-- Atalho para formatar manualmente
+vim.keymap.set("n", "<leader>f", function()
+  vim.lsp.buf.format()
+end, { desc = "Formatar código" })
 
--- Format command
--- vim.keymap.set("n", "<leader>f", function()
--- vim.lsp.buf.format()
--- end)
+-- Inserção: seta para a direita funciona normalmente
+vim.keymap.set('i', '<Right>', '<Right>', { noremap = true })
 
--- insert commands
-vim.keymap.set('i', '<Right>', '<Right>', { noremap = true }) -- Make the right arrow behave normally in insert mode
+-- Comentários antigos traduzidos:
+-- vim.keymap.set("n", "<leader>e", vim.cmd.Ex)                             -- Abrir explorador de arquivos
+-- vim.keymap.set("n", "J", "mzJ`z")                                       -- Unir linhas mantendo posição do cursor
+-- vim.keymap.set("n", "<C-d>", "<C-d>zz")                                 -- Descer meia página centralizando
+-- vim.keymap.set("n", "<C-u>", "<C-u>zz")                                 -- Subir meia página centralizando
+-- vim.keymap.set("n", "n", "nzzzv")                                       -- Centralizar resultado da busca
+-- vim.keymap.set("n", "N", "Nzzzv")                                       -- Centralizar resultado da busca reversa
+-- vim.keymap.set("n", "Q", "<nop>")                                       -- Desativar o modo Ex
+-- vim.keymap.set("n", "<leader>/", "<Plug>(comment_toggle_linewise_current)") -- Comentar/descomentar linha
+-- vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]]) -- Buscar e substituir
+
+-- Telescope:
+-- vim.keymap.set('n', '<leader>ff', builtin.find_files, {})               -- Buscar arquivos
+-- vim.keymap.set('n', '<leader>fg', builtin.git_files, {})                -- Buscar arquivos Git
+-- vim.keymap.set('n', '<leader>fl', builtin.live_grep, {})                -- Grep ao vivo
+-- vim.keymap.set('n', ';', builtin.buffers, {})                           -- Listar buffers
+
+-- Modo visual:
+-- vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")                            -- Mover seleção para baixo
+-- vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")                            -- Mover seleção para cima
+-- vim.keymap.set("v", "<leader>/", "<Plug>(comment_toggle_linewise_visual)") -- Comentar/descomentar visual
