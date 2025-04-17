@@ -1,6 +1,6 @@
 return {
   "folke/which-key.nvim",
-  event = "VeryLazy",
+  event = "VimEnter", -- Tente carregar o plugin mais cedo
   init = function()
     vim.o.timeout = true
     vim.o.timeoutlen = 300
