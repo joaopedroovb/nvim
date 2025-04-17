@@ -96,24 +96,4 @@ end, { desc = "Formatar código" })
 -- Inserção: seta para a direita funciona normalmente
 vim.keymap.set('i', '<Right>', '<Right>', { noremap = true })
 
--- Comentários antigos traduzidos:
--- vim.keymap.set("n", "<leader>e", vim.cmd.Ex)                             -- Abrir explorador de arquivos
--- vim.keymap.set("n", "J", "mzJ`z")                                       -- Unir linhas mantendo posição do cursor
--- vim.keymap.set("n", "<C-d>", "<C-d>zz")                                 -- Descer meia página centralizando
--- vim.keymap.set("n", "<C-u>", "<C-u>zz")                                 -- Subir meia página centralizando
--- vim.keymap.set("n", "n", "nzzzv")                                       -- Centralizar resultado da busca
--- vim.keymap.set("n", "N", "Nzzzv")                                       -- Centralizar resultado da busca reversa
--- vim.keymap.set("n", "Q", "<nop>")                                       -- Desativar o modo Ex
--- vim.keymap.set("n", "<leader>/", "<Plug>(comment_toggle_linewise_current)") -- Comentar/descomentar linha
--- vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]]) -- Buscar e substituir
-
--- Telescope:
--- vim.keymap.set('n', '<leader>ff', builtin.find_files, {})               -- Buscar arquivos
--- vim.keymap.set('n', '<leader>fg', builtin.git_files, {})                -- Buscar arquivos Git
--- vim.keymap.set('n', '<leader>fl', builtin.live_grep, {})                -- Grep ao vivo
--- vim.keymap.set('n', ';', builtin.buffers, {})                           -- Listar buffers
-
--- Modo visual:
--- vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")                            -- Mover seleção para baixo
--- vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")                            -- Mover seleção para cima
--- vim.keymap.set("v", "<leader>/", "<Plug>(comment_toggle_linewise_visual)") -- Comentar/descomentar visual
+vim.keymap.set("n", "<leader>b", "<cmd>NvimTreeToggle<CR>", { desc = "Alternar NvimTree" })
