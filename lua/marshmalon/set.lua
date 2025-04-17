@@ -1,4 +1,4 @@
-vim.cmd.colorscheme("tokyonight")
+vim.cmd.colorscheme("mellifluous")
 
 vim.opt.clipboard = 'unnamedplus' -- use system keyboard for yank
 
