@@ -85,15 +85,8 @@ local visual_mappings = {
 
 which_key.register(visual_mappings, { mode = "v" })
 
--- Impedir que colar no modo visual sobrescreva o conteúdo copiado
-vim.keymap.set("x", "<leader>p", "\"_dP")
-
--- Atalho para formatar manualmente
-vim.keymap.set("n", "<leader>f", function()
-  vim.lsp.buf.format()
-end, { desc = "Formatar código" })
-
 -- Inserção: seta para a direita funciona normalmente
 vim.keymap.set('i', '<Right>', '<Right>', { noremap = true })
 
+-- Abrir NvimTree
 vim.keymap.set("n", "<leader>b", "<cmd>NvimTreeToggle<CR>", { desc = "Alternar NvimTree" })
